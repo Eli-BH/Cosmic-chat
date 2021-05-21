@@ -1,0 +1,37 @@
+.login {
+  height: 100%;
+  width: 100%;
+
+  .loginWrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .container {
+      .heading {
+        text-align: center;
+        padding: 50px;
+        font-size: 40px;
+      }
+    }
+    .loginForm {
+      margin: auto;
+      max-width: 700px;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .login {
+    .loginWrapper {
+      .container {
+        .heading {
+          font-size: 30px;
+          padding: 0;
+          margin-bottom: 30px;
+        }
+      }
+    }
+  }
+}

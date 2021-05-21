@@ -1,0 +1,84 @@
+.room {
+  height: 100%;
+  width: 100%;
+  background-color: powderblue;
+
+  .room-heading {
+  }
+
+  .room-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .current-user-list {
+      flex: 2;
+    }
+    .room-message-board {
+      flex: 10;
+
+      .room-messages {
+        height: 800px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .room {
+    height: 100%;
+    width: 100%;
+    background-color: powderblue;
+
+    .room-heading {
+      font-size: 24px;
+      padding: 20px 0;
+    }
+
+    .room-wrapper {
+      width: 100%;
+      height: 80%;
+      display: flex;
+      justify-content: center;
+      .current-user-list {
+        display: none;
+      }
+      .room-message-board {
+        flex: 1;
+
+        .room-messages {
+          height: 600px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-height: 400px) {
+  .room {
+    height: 100%;
+    width: 100%;
+    background-color: powderblue;
+
+    .room-heading {
+      font-size: 24px;
+      padding: 20px 0;
+    }
+
+    .room-wrapper {
+      width: 100%;
+      height: 80%;
+      display: flex;
+      justify-content: center;
+      .current-user-list {
+        display: none;
+      }
+      .room-message-board {
+        flex: 1;
+
+        .room-messages {
+          height: 200px;
+        }
+      }
+    }
+  }
+}
