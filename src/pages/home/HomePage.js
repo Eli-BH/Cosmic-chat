@@ -15,8 +15,6 @@ const HomePage = () => {
 
   const { userData } = useSelector(userSelector);
 
-  console.log(userData.username);
-
   useEffect(() => {
     const getRooms = async () => {
       try {
