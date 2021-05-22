@@ -10,10 +10,13 @@
   align-items: center;
 
   .room-heading {
-    margin-bottom: 100px;
     font-size: 62px;
     font-family: "Roboto Slab", serif;
     padding-top: 50px;
+  }
+
+  .delete-btn {
+    margin-bottom: 70px;
   }
 
   .room-wrapper {
@@ -29,7 +32,7 @@
 
       .room-messages {
         height: 800px;
-        border: solid darkblue 2px;
+
         .room-message-body {
           overflow-y: scroll;
 
@@ -46,6 +49,12 @@
                   object-fit: contain;
                   padding: 10px;
                 }
+              }
+
+              .authorImg {
+                height: 50px;
+                width: 50px;
+                margin-left: auto;
               }
             }
           }

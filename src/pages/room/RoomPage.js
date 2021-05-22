@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../slices/user";
@@ -12,6 +12,7 @@ const RoomPage = () => {
   const [messageList, setMessageList] = useState([]);
   const [ioMessageList, setIoMessageList] = useState([]);
   const [file, setFile] = useState(null);
+  const [roomData, setRoomData] = useState({});
 
   const currentRoom = useParams().roomName.trim();
 
@@ -21,6 +22,21 @@ const RoomPage = () => {
   const socket = useRef();
   const message = useRef();
   const scrollRef = useRef();
+  const history = useHistory();
+
+  useEffect(() => {
+    const getRoomData = async () => {
+      try {
+        const { data } = await axios.get(
+          `http://localhost:3001/api/room/current_room/${currentRoom}`
+        );
+        setRoomData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getRoomData();
+  }, [currentRoom]);
 
   useEffect(() => {
     socket.current = io(CONNECTION_PORT);
@@ -75,6 +91,7 @@ const RoomPage = () => {
         text: message.current.value,
         time: Date.now(),
         author: userData.username,
+        authorImg: userData.userImage,
       },
     };
 
@@ -135,11 +152,30 @@ const RoomPage = () => {
     setFile(null);
   };
 
-  console.log("somehing");
+  const handleDelete = async () => {
+    try {
+      await axios.delete(
+        `http://localhost:3001/api/room/${currentRoom}/${userData.username}`
+      );
+      history.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="room">
       <h1 className="room-heading">{`Welcome to the  ${currentRoom} room.`}</h1>
+
+      {roomData.admin === userData.username && (
+        <button
+          className="btn btn-lg btn-outline-danger delete-btn"
+          onClick={handleDelete}
+        >
+          Delete Room
+        </button>
+      )}
+
       <div className="room-wrapper container">
         <div className="current-user-list">
           <ul className="list-group">
@@ -178,9 +214,9 @@ const RoomPage = () => {
           </div>
           <form onSubmit={sendMessage}>
             <div className="input-group mb-3">
-              <div class="input-group-prepend" style={{ width: 110 }}>
+              <div className="input-group-prepend" style={{ width: 110 }}>
                 <input
-                  class="form-control"
+                  className="form-control"
                   type="file"
                   id="formFile"
                   onChange={(e) => setFile(e.target.files[0])}

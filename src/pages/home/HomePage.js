@@ -8,7 +8,7 @@ import "./home.scss";
 import axios from "axios";
 
 const HomePage = () => {
-  const [room, setRoom] = useState("");
+  const [room, setRoom] = useState("Select a room");
   const [rooms, setRooms] = useState([]);
   const newRoom = useRef();
   const history = useHistory();
@@ -31,9 +31,23 @@ const HomePage = () => {
   const handleRoomAdd = async (e) => {
     e.preventDefault();
 
+    if (newRoom.current.value.includes(" ")) {
+      toast.error("No spaces", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      newRoom.current.value = "";
+      return;
+    }
+
     try {
       await axios.post("http://localhost:3001/api/room/new_room", {
-        username: "tester",
+        username: userData.username,
         roomName: newRoom.current.value,
       });
 
@@ -65,6 +79,18 @@ const HomePage = () => {
 
   const handleEnterRoom = async (e) => {
     e.preventDefault();
+
+    if (room === "Select a room") {
+      return toast.error("Select or Create a room", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
 
     try {
       await axios.put("http://localhost:3001/api/room/enter_room", {
@@ -106,9 +132,7 @@ const HomePage = () => {
                   className="custom-select"
                   onChange={(e) => setRoom(e.target.value)}
                 >
-                  <option defaultValue disabled>
-                    Select a room
-                  </option>
+                  <option defaultValue>Select a room</option>
 
                   {rooms &&
                     rooms.map((room, index) => (

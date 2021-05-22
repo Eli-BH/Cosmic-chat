@@ -39,6 +39,10 @@ const authSlice = createSlice({
       state.loading = false;
       state.hasError = payload;
     },
+    logout: (state) => {
+      state.authData = "";
+      window.localStorage.clear();
+    },
   },
 });
 
@@ -50,6 +54,7 @@ export const {
   register,
   registerFailure,
   registerSuccess,
+  logout,
 } = authSlice.actions;
 
 //login selector
