@@ -18,7 +18,7 @@ const RoomPage = () => {
 
   const { userData } = useSelector(userSelector);
 
-  const CONNECTION_PORT = "localhost:3001";
+  const CONNECTION_PORT = "cosmic-cord.herokuapp.com";
   const socket = useRef();
   const message = useRef();
   const scrollRef = useRef();
