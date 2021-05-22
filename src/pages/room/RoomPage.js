@@ -11,7 +11,7 @@ import io from "socket.io-client";
 const RoomPage = () => {
   const [messageList, setMessageList] = useState([]);
   const [ioMessageList, setIoMessageList] = useState([]);
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState(null);
 
   const currentRoom = useParams().roomName.trim();
 
@@ -78,30 +78,61 @@ const RoomPage = () => {
       },
     };
 
+    let formData = new FormData();
+    formData.append("image", file);
+    formData.append("text", message.current.value || "");
+    formData.append("author", userData.username);
+    formData.append("roomName", currentRoom);
+
     message.current.value = "";
 
     try {
-      setMessageList([
-        ...messageList,
-        {
+      if (file) {
+        const { data } = await axios.post(
+          "http://localhost:3001/api/room/new_img_message",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        setMessageList([
+          ...messageList,
+          {
+            text: newMessage.content.text,
+            author: userData.username,
+            time: Date.now(),
+            img: data,
+          },
+        ]);
+
+        await socket.current.emit("sendMessage", newMessage);
+      } else {
+        setMessageList([
+          ...messageList,
+          {
+            text: newMessage.content.text,
+            author: userData.username,
+            time: Date.now(),
+          },
+        ]);
+
+        await axios.post("http://localhost:3001/api/room/new_message", {
+          roomName: currentRoom,
           text: newMessage.content.text,
           author: userData.username,
-          time: Date.now(),
-        },
-      ]);
+        });
 
-      await socket.current.emit("sendMessage", newMessage);
-
-      await axios.post("http://localhost:3001/api/room/new_message", {
-        roomName: currentRoom,
-        text: newMessage.content.text,
-        author: userData.username,
-      });
+        await socket.current.emit("sendMessage", newMessage);
+      }
     } catch (error) {
       console.log(error);
     }
 
     message.current.value = "";
+    setFile(null);
   };
 
   console.log("somehing");
@@ -134,11 +165,8 @@ const RoomPage = () => {
                       val.author === userData.username ? "card ml-auto" : "card"
                     }
                   >
-                    <div className="card-body card-content">
-                      {file && <img src={file} alt="img" />}
-
-                      {val.text}
-                    </div>
+                    {val.img && <img src={val.img} alt="img" />}
+                    <div className="card-body card-content">{val.text}</div>
                     <div className="card-footer">
                       <small>{val.author} - </small>
                       <small>{format(val.time)}</small>
@@ -150,6 +178,14 @@ const RoomPage = () => {
           </div>
           <form onSubmit={sendMessage}>
             <div className="input-group mb-3">
+              <div class="input-group-prepend" style={{ width: 110 }}>
+                <input
+                  class="form-control"
+                  type="file"
+                  id="formFile"
+                  onChange={(e) => setFile(e.target.files[0])}
+                />
+              </div>
               <input
                 type="text"
                 className="form-control"
