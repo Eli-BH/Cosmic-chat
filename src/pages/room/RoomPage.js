@@ -18,7 +18,7 @@ const RoomPage = () => {
 
   const { userData } = useSelector(userSelector);
 
-  const CONNECTION_PORT = "cosmic-cord.herokuapp.com";
+  const CONNECTION_PORT = "localhost:3001";
   const socket = useRef();
   const message = useRef();
   const scrollRef = useRef();
@@ -28,7 +28,7 @@ const RoomPage = () => {
     const getRoomData = async () => {
       try {
         const { data } = await axios.get(
-          `https://cosmic-cord.herokuapp.com/api/room/current_room/${currentRoom}`
+          `http://localhost:3001/api/room/current_room/${currentRoom}`
         );
         setRoomData(data);
       } catch (error) {
@@ -71,7 +71,7 @@ const RoomPage = () => {
     const fetchMessages = async () => {
       try {
         const { data } = await axios.get(
-          `https://cosmic-cord.herokuapp.com/api/room/messages/${currentRoom}`
+          `http://localhost:3001/api/room/messages/${currentRoom}`
         );
         setMessageList(data);
       } catch (error) {
@@ -91,7 +91,6 @@ const RoomPage = () => {
         text: message.current.value,
         time: Date.now(),
         author: userData.username,
-        authorImg: userData.userImage,
       },
     };
 
@@ -106,7 +105,7 @@ const RoomPage = () => {
     try {
       if (file) {
         const { data } = await axios.post(
-          "https://cosmic-cord.herokuapp.com/api/room/new_img_message",
+          "http://localhost:3001/api/room/new_img_message",
           formData,
           {
             headers: {
@@ -125,7 +124,18 @@ const RoomPage = () => {
           },
         ]);
 
-        await socket.current.emit("sendMessage", newMessage);
+        const newImgMessage = {
+          room: currentRoom,
+
+          content: {
+            text: newMessage.content.text,
+            time: Date.now(),
+            author: userData.username,
+            img: data,
+          },
+        };
+
+        await socket.current.emit("sendMessage", newImgMessage);
       } else {
         setMessageList([
           ...messageList,
@@ -135,17 +145,12 @@ const RoomPage = () => {
             time: Date.now(),
           },
         ]);
-
-        await axios.post(
-          "https://cosmic-cord.herokuapp.com/api/room/new_message",
-          {
-            roomName: currentRoom,
-            text: newMessage.content.text,
-            author: userData.username,
-          }
-        );
-
         await socket.current.emit("sendMessage", newMessage);
+        await axios.post("http://localhost:3001/api/room/new_message", {
+          roomName: currentRoom,
+          text: newMessage.content.text,
+          author: userData.username,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -155,16 +160,19 @@ const RoomPage = () => {
     setFile(null);
   };
 
+  console.log(file);
+
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `https://cosmic-cord.herokuapp.com/api/room/${currentRoom}/${userData.username}`
+        `http://localhost:3001/api/room/${currentRoom}/${userData.username}`
       );
       history.push("/");
     } catch (error) {
       console.log(error);
     }
   };
+  console.log(messageList);
 
   return (
     <div className="room">
