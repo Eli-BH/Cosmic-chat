@@ -22,17 +22,15 @@ const RegisterPage = () => {
   const { hasError } = useSelector(authSelector);
 
   hasError &&
-    hasError(
-      toast.error("Passwords do not match", {
-        position: hasError,
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      })
-    );
+    toast.error("Register error", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
 
   const handleRegister = async (e) => {
     e.preventDefault();

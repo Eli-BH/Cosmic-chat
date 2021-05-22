@@ -43,11 +43,14 @@ export function getCurrentUser(userToken) {
     dispatch(getUser());
 
     try {
-      const res = await axios.get("http://localhost:3001/api/user", {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      });
+      const res = await axios.get(
+        "https://cosmic-cord.herokuapp.com/api/user",
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
       dispatch(getUserSuccess(res.data));
     } catch (error) {
       console.log(error);
