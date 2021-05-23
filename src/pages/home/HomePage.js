@@ -18,7 +18,9 @@ const HomePage = () => {
   useEffect(() => {
     const getRooms = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3001/api/room");
+        const { data } = await axios.get(
+          "https://cosmic-cord.herokuapp.com/api/room"
+        );
         setRooms(data);
       } catch (error) {
         console.log(error);
@@ -46,12 +48,14 @@ const HomePage = () => {
     }
 
     try {
-      await axios.post("http://localhost:3001/api/room/new_room", {
+      await axios.post("https://cosmic-cord.herokuapp.com/api/room/new_room", {
         username: userData.username,
         roomName: newRoom.current.value,
       });
 
-      const { data } = await axios.get("http://localhost:3001/api/room");
+      const { data } = await axios.get(
+        "https://cosmic-cord.herokuapp.com/api/room"
+      );
       setRooms(data);
 
       toast.success("Room Created", {
@@ -93,7 +97,7 @@ const HomePage = () => {
     }
 
     try {
-      await axios.put("http://localhost:3001/api/room/enter_room", {
+      await axios.put("https://cosmic-cord.herokuapp.com/api/room/enter_room", {
         username: userData.username,
         roomName: room.toLowerCase(),
       });
