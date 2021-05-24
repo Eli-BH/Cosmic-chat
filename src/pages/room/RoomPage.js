@@ -55,7 +55,11 @@ const RoomPage = () => {
     socket.current.on("receiveMessage", (data) => {
       setMessageList([...messageList, data]);
     });
-  });
+
+    return () => {
+      socket.current.off("receiveMessage");
+    };
+  }, [messageList]);
 
   useEffect(() => {
     socket.current.on("sendList", (data) => {
@@ -135,7 +139,7 @@ const RoomPage = () => {
           },
         };
 
-        await socket.current.emit("sendMessage", newImgMessage);
+        socket.current.emit("sendMessage", newImgMessage);
       } else {
         setMessageList([
           ...messageList,
@@ -145,7 +149,7 @@ const RoomPage = () => {
             time: Date.now(),
           },
         ]);
-        await socket.current.emit("sendMessage", newMessage);
+        socket.current.emit("sendMessage", newMessage);
         await axios.post(
           "https://cosmic-cord.herokuapp.com/api/room/new_message",
           {
