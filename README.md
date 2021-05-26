@@ -1,70 +1,99 @@
-# Getting Started with Create React App
+<p align="center">
+  <a href="" rel="noopener">
+ <img width=200px height=200px src="https://i.imgur.com/aQ8DOs3.jpg" alt="Project logo"></a>
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h3 align="center">Cosmic Chat App</h3>
 
-## Available Scripts
+<div align="center">
 
-In the project directory, you can run:
+[![Status](https://img.shields.io/badge/status-active-success.svg)]()
+[![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
-### `npm start`
+</div>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<p align="center"> A chat application that allows the user to make new rooms and send messages with images.
+    <br> 
+</p>
 
-### `npm test`
+## 📝 Table of Contents
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [About](#about)
+- [Getting Started](#getting_started)
+- [Usage](#usage)
+- [Built Using](#built_using)
+- [TODO](./TODO.md)
+- [Authors](#authors)
 
-### `npm run build`
+## 🧐 About <a name = "about"></a>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The purpose of this project was to practice deploying a chat application that uses socket.io. I goal was also to be
+able to do that while having the ability to send image messages. I was able to implement this by connecting the application to an AWS S3. When the users want to send an image, they are able to attach an image file. That file gets handled through the backend by stripping the file from the message, and sending it to AWS, and have the S3 bucket return a link that can be used publicly.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The user also has the ability to delete a room that they create, the gives the room creating user, basic admin abilities.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The chat conversations are also stored in MongoDB, so they can pick up where they left off next time they return to the chatroom.
 
-### `npm run eject`
+I wanted to add a way for users to see the current users, I was able to come up with a working solution using socket.io and a simple Object. This means that When someone is in the room, their username will be added to the sidebar, and when they leave, the username will disappear with them.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 🏁 Getting Started <a name = "getting_started"></a>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To get started with the project on a local system, you need to create a new mongoDB cluster, an AWS with credentials to manipulate a S3 bucket. And a new S3 bucket that is set to public.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+All api keys should be set into a .env file.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+After connecting the mongodb cluster and the S3 bucket, all that is needed is to start the server and client as normally. The code for the server is [here](https://github.com/Eli-BH/cosmic-chat-server). This is a normal node express server, this is also where all the api key are connected to.
 
-## Learn More
+To start the client, all that is needed is to use npm install and npm start.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Prerequisites
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+You need an updated version of node installed on your system.
 
-### Code Splitting
+### Installing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Just clone the repository in to a new directory.
 
-### Analyzing the Bundle Size
+```
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
+npm start
+```
 
-### Making a Progressive Web App
+The server needs to be cloned into a separate folder
+[server](https://github.com/Eli-BH/cosmic-chat-server)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+the api keys and mongo URI needs to be added to a .env file on the root of the server directory
 
-### Advanced Configuration
+```
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```
+npm start
+```
 
-### Deployment
+## 🎈 Usage <a name="usage"></a>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+One needs to create a new account with a username, email, and a password.
+If there are no rooms, one should be created in order to start chatting.
+When the room is created, you can enter it and start chatting.
 
-### `npm run build` fails to minify
+## ⛏️ Built Using <a name = "built_using"></a>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [MongoDB](https://www.mongodb.com/) - Database
+- [Express](https://expressjs.com/) - Server Framework
+- [ReactJS](https://reactjs.org/) - Web Framework
+- [NodeJs](https://nodejs.org/en/) - Server Environment
+- [AWS](https://aws.amazon.com/) - Cloud Storage
+- [Socket.io](https://socket.io/) - Bidirectional data communication
+
+## ✍️ Authors <a name = "authors"></a>
+
+- [@Eli-BH](https://github.com/Eli-BH) - Idea & Initial work
