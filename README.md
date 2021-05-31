@@ -5,6 +5,8 @@
 
 <h3 align="center">Cosmic Chat App</h3>
 
+<a href="https://github.com/Eli-BH/cosmic-chat-server"><h6>Server repo</h6></a>
+
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
