@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="" rel="noopener">
+  <a href="https://cosmic-chatcord.herokuapp.com/" rel="noopener">
  <img width=200px height=200px src="https://i.imgur.com/aQ8DOs3.jpg" alt="Project logo"></a>
 </p>
 
