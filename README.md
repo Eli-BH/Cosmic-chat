@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+# Cosmic Chat App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of Contents
 
-## Available Scripts
+- [About](#about)
+- [Getting Started](#getting_started)
+- [Usage](#usage)
+- [Contributing](../CONTRIBUTING.md)
 
-In the project directory, you can run:
+## About <a name = "about"></a>
 
-### `npm start`
+This is a chat application that uses MongoDB to store the conversation history, React for the front end framework and, NodeJS and ExpressJS for the backend server.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The application uses Amazons S3 Buckets to store and serve images in messages. 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Getting Started <a name = "getting_started"></a>
 
-### `npm test`
+To start the application, you will need to clone this repo and the [server repo](https://github.com/Eli-BH/cosmic-chat-server) to your system. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Create a .env file in the servers base directory, and enter the environment variables.
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+You will need an updated version of node, a mongodb cluster or localdb, an a AWS S3 Bucket setup to have access to your ip.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Installing
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Clone the client director and server directory and enter
+`npm install`
+in both with your command line.
 
-### `npm run eject`
+In the server directory, create a .env file with the following environment variables and their respective keys.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- MONGO_URI
+  
+- ACCESS_TOKEN_SECRET
+  
+- S3_REGION
+  
+- S3_NAME
+  
+- AWS_ACCESS_SECRET
+  
+- AWS_ACCESS_KEY
+  
+## Usage <a name = "usage"></a>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+You can create a new user with the auth form, 
+then create a room to enter, then enter the room and start chatting. 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Auth
+<img src="https://i.imgur.com/uurj3G4.jpg" alt="auth">
 
-## Learn More
+New Room
+<img src="https://i.imgur.com/SuE7KOg.jpg" alt="new Room">
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Sending a message
+<img src="https://i.imgur.com/j4zxods.jpg" alt="sending a message">
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Sending an Image
+<img src="https://i.imgur.com/LUDo7xX.jpg" alt="">
